@@ -25,5 +25,5 @@ jobs:
       env:
         ACTOR: ${{ github.actor }}
         NUMBER: ${{ github.event.issue.number }}
-        REPO: ${{ github.action_repository }}
+        REPO: ${{ github.repository }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
