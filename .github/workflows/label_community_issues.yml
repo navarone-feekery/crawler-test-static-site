@@ -10,15 +10,15 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
     - name: Install dependencies
-      run: python3.10 -m pip install gidgethub
+      run: python3 -m pip install gidgethub
 
     - name: Run Python script
       run: python .github/workflows/scripts/add_community_issue_labels.py
