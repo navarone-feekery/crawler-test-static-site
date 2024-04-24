@@ -1,33 +1,29 @@
-name: Label community issues
+name: Issue Created
 
 on:
   issues:
-    types:
-      - opened
+    types: [opened]
 
 jobs:
-  label_community_issues:
+  run-python-script:
     runs-on: ubuntu-latest
-    permissions: write-all
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GH_REPO: ${{ github.repository }}
-      NUMBER: ${{ github.event.issue.number }}
-      LABELS: community-driven,needs-triage
+
     steps:
-      - name: Get maintainers
-        run: |
-          echo "COLLABORATORS=$(gh api /repos/elastic/connectors/collaborators --jq '.[] | .login')" >> $GITHUB_ENV
-          echo "TEAMS=$(gh api /repos/elastic/connectors/teams --jq '.[] | .id')" >> $GITHUB_ENV
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Is collaborator?
-        run: |
-          if [[ $COLLABORATORS =~ github.author ]]; then
-            echo "IS_COLLABORATOR=true" >> "$GITHUB_ENV"
-          else
-            echo "IS_COLLABORATOR=false" >> "$GITHUB_ENV"
-          fi
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
 
-      - name: Apply labels
-        if: env.IS_COLLABORATOR != 'true'
-        run: gh issue edit "$NUMBER" --add-label "$LABELS"
+    - name: Install dependencies
+      run: pip install gidgethub
+
+    - name: Run Python script
+      run: python .github/workflows/scripts/add_community_issue_labels.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ISSUE_AUTHOR: ${{ github.actor }}
+        ISSUE_NUMBER: ${{ github.event.issue.number }}
+        REPO: ${{ github.action_repository }}
