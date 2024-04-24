@@ -6,14 +6,12 @@ on:
       - opened
 
 jobs:
-  enforce_label_permissions:
+  label_community_issues:
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
-      - name: Further actions based on maintainer status
-        if: steps.check-maintainer.outputs.is_maintainer == 'true'
-        run: gh issue edit "$NUMBER" --add-label "$LABELS"
+      - run: gh issue edit "$NUMBER" --add-label "$LABELS"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
