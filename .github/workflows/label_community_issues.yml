@@ -10,18 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-    if: |
-      collaborators="$(gh api /repos/elastic/connectors/collaborators --jq '.[] | .login')"
-      teams="$(gh api /repos/elastic/connectors/teams --jq '.[] | .id')"
-      echo "::notice::****"
-      echo $collaborators
-      echo "::notice::****"
-      echo $teams
-      echo "::notice::****"
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      NUMBER: ${{ github.event.issue.number }}
+      LABELS: community-driven,needs-triage
     steps:
-      - run: gh issue edit "$NUMBER" --add-label "$LABELS"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-          NUMBER: ${{ github.event.issue.number }}
-          LABELS: community-driven,needs-triage
+      - name: Get maintainers
+        run: |
+          echo "COLLABORATORS=$(gh api /repos/elastic/connectors/collaborators --jq '.[] | .login')" >> $GITHUB_ENV
+          echo "TEAMS=$(gh api /repos/elastic/connectors/teams --jq '.[] | .id')" >> $GITHUB_ENV
+
+      - name: Is collaborator?
+        run: |
+          if [[ $COLLABORATORS =~ github.author ]]; then
+            echo "IS_COLLABORATOR=true" >> "$GITHUB_ENV"
+          else
+            echo "IS_COLLABORATOR=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Apply labels
+        if: env.IS_COLLABORATOR != 'true'
+        run: gh issue edit "$NUMBER" --add-label "$LABELS"
