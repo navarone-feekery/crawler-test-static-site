@@ -23,7 +23,7 @@ jobs:
     - name: Run Python script
       run: python .github/workflows/scripts/add_community_issue_labels.py
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ISSUE_AUTHOR: ${{ github.actor }}
-        ISSUE_NUMBER: ${{ github.event.issue.number }}
+        ACTOR: ${{ github.actor }}
+        NUMBER: ${{ github.event.issue.number }}
         REPO: ${{ github.action_repository }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
