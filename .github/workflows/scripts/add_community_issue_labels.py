@@ -21,7 +21,6 @@ async def main():
         print(f"ACTOR: {ACTOR}")
         print(f"NUMBER: {NUMBER}")
         print(f"REPO: {REPO}")
-        print(f"GITHUB_TOKEN: {GITHUB_TOKEN[:5]}...")
         print("********")
 
         try:
