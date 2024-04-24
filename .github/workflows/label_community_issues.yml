@@ -8,9 +8,7 @@ on:
 jobs:
   label_community_issues:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      metadata: read
+    permissions: write-all
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GH_REPO: ${{ github.repository }}
