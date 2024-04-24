@@ -1,0 +1,21 @@
+name: Label community issues
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  enforce_label_permissions:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Further actions based on maintainer status
+        if: steps.check-maintainer.outputs.is_maintainer == 'true'
+        run: gh issue edit "$NUMBER" --add-label "$LABELS"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABELS: community-drive,needs-triage
