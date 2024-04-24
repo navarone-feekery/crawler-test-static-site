@@ -18,7 +18,7 @@ jobs:
         python-version: '3.10'
 
     - name: Install dependencies
-      run: pip install gidgethub
+      run: python3.10 -m pip install gidgethub
 
     - name: Run Python script
       run: python .github/workflows/scripts/add_community_issue_labels.py
