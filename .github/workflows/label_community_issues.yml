@@ -11,12 +11,12 @@ jobs:
     permissions:
       issues: write
     if: |
-      collaborators=$(gh api /repos/elastic/connectors/collaborators --jq '.[] | .login')
-      teams=$(gh api /repos/elastic/connectors/teams --jq '.[] | .id')
+      collaborators="$(gh api /repos/elastic/connectors/collaborators --jq '.[] | .login')"
+      teams="$(gh api /repos/elastic/connectors/teams --jq '.[] | .id')"
       echo "::notice::****"
-      echo collaborators
+      echo $collaborators
       echo "::notice::****"
-      echo teams
+      echo $teams
       echo "::notice::****"
     steps:
       - run: gh issue edit "$NUMBER" --add-label "$LABELS"
