@@ -1,4 +1,5 @@
 User-Agent: *
+Allow: /
 Sitemap: https://www.bnymellon.com/us/en.sitemap.sitemap.xml
 Sitemap: https://www.bnymellon.com/emea/en.sitemap.xml
 Sitemap: https://www.bnymellon.com/apac/en.sitemap.xml
