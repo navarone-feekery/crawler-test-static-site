@@ -1,10 +1,17 @@
-<h1>Hi, I'm a website.</h1>
-
-<a href="https://navarone-feekery.github.io/crawler-test-static-site/docs/page1.html?foo=bar">Link to page 1</a>
-
-<a href="https://navarone-feekery.github.io/crawler-test-static-site/docs/page2.html">Link to page 2</a>
-
-<div data-elastic-exclude>
-  exclude this data
-  <div data-elastic-include>but include this</div>
-</div>
+<head>
+  <meta class="elastic" name="meta_extraction" content="Extract my meta!">
+</head>
+<body>
+  
+  <h1>Hi, I'm a website.</h1>
+  <div data-elastic-name="div_extraction">Extract my div!</div>
+  
+  <a href="https://navarone-feekery.github.io/crawler-test-static-site/docs/page1.html?foo=bar">Link to page 1</a>
+  
+  <a href="https://navarone-feekery.github.io/crawler-test-static-site/docs/page2.html">Link to page 2</a>
+  
+  <div data-elastic-exclude>
+    exclude this data
+    <div data-elastic-include>but include this</div>
+  </div>
+</body>
